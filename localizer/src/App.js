@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import TranslationComponent from './components/TranslationComponent';
 
 import './App.css'
@@ -10,36 +10,60 @@ import {
 
 const App = ()=>{
   const [language, setLanguage] = useState('en');
-
+const [translations, setTranslations] = useState({})
   const handleLanguageChange = (event) =>{
+
     setLanguage(event.target.value);
   }
 
 
+useEffect(() => {
+  const fetchTranslations = async () => {
+    try {
+      const translateClient = new TranslateClient({
+        region: "us-east-1",
+        credentials: {
+          accessKeyId: '[access-key-id]',
+          secretAccessKey: '[access-secret-key]',
+        }
+      });
 
- const handleTranslation = async (textAndSourceLanguage) => {
-    const translateClient = new TranslateClient({ 
-  region: "ap-southeast-1",
-  credentials: {
-    accessKeyId: '[access-key-id]', 
-    secretAccessKey: '[secret-access-key]',
-  }
-});
-  
-    const translateCommand = new TranslateTextCommand({
-      SourceLanguageCode: "en",
-      TargetLanguageCode: "fr",
-      Text: "This is a sample text",
-    });
-  
-    const { TranslatedText } = await translateClient.send(translateCommand);
-    console.log(TranslatedText)
-    return { translated_text: TranslatedText };
+      const sampleText = {
+        "greeting": "Hello, World!",
+        "instruction": "Click the button below to continue."
+      };
+
+      const translateCommandGreeting = new TranslateTextCommand({
+        SourceLanguageCode: "en",
+        TargetLanguageCode: language,
+        Text: sampleText.greeting,
+      });
+
+      const translateCommandInstruction = new TranslateTextCommand({
+        SourceLanguageCode: "en",
+        TargetLanguageCode: language,
+        Text: sampleText.instruction,
+      });
+
+      const { TranslatedText: translatedGreeting } = await translateClient.send(translateCommandGreeting);
+      const { TranslatedText: translatedInstruction } = await translateClient.send(translateCommandInstruction);
+
+      setTranslations({
+        translated_greeting: translatedGreeting,
+        translated_instruction: translatedInstruction
+      });
+    } catch (error) {
+      console.error('Error fetching translations:', error);
+    }
   };
 
-handleTranslation('en')
+  fetchTranslations();
+}, [language]);
+
 // console.log(fetchTranslations('fr'))
-const translations = require(`../public/translations/${language}.json`)
+
+// Simulated json file for translations
+// const translations = require(`../public/translations/${language}.json`)
 
 return (
   <div>
@@ -49,7 +73,8 @@ return (
       <option value="fr">French</option>
     </select>
     <hr />
-    <TranslationComponent translations={translations} lang = {language}/>
+    {/* <TranslationComponent translations={translations} lang = {language}/> */}
+    <TranslationComponent translations={translations} lang={language} />
   </div>
 )
 }
