@@ -5,8 +5,12 @@ import './App.css'
 import {
   TranslateClient,
   TranslateTextCommand,
+  
 } from "@aws-sdk/client-translate";
 
+import {
+  ComprehendClient, DetectDominantLanguageCommand
+} from "@aws-sdk/client-comprehend"
 
 const App = ()=>{
   const [language, setLanguage] = useState('en');
@@ -17,14 +21,41 @@ const [translations, setTranslations] = useState({})
   }
 
 
+
+const detectLanguageComp = ()=>{
+  const comprehendClient = new ComprehendClient({region: "us-east-1",
+  credentials: {
+    accessKeyId: '[access-id]',
+    secretAccessKey: '[access-secret]',
+  } });
+
+  const textToDetect = "Hello, what's up?"
+
+  async function detectLanguage() {
+    try {
+        const data = await comprehendClient.send(new DetectDominantLanguageCommand({
+            Text: textToDetect
+        }));
+        console.log(data)
+        console.log("Detected language code:", data.Languages[0].LanguageCode);
+        console.log("Detected language:", data.Languages[0].Score);
+    } catch (error) {
+        console.error("Error detecting language:", error);
+    }
+}
+
+detectLanguage();
+}
+
+
 useEffect(() => {
   const fetchTranslations = async () => {
     try {
       const translateClient = new TranslateClient({
         region: "us-east-1",
         credentials: {
-          accessKeyId: '[access-key-id]',
-          secretAccessKey: '[access-secret-key]',
+          accessKeyId: '[access-id]',
+          secretAccessKey: '[access-secret]',
         }
       });
 
@@ -32,6 +63,8 @@ useEffect(() => {
         "greeting": "Hello, World!",
         "instruction": "Click the button below to continue."
       };
+
+
 
       const translateCommandGreeting = new TranslateTextCommand({
         SourceLanguageCode: "en",
@@ -58,6 +91,7 @@ useEffect(() => {
   };
 
   fetchTranslations();
+  detectLanguageComp()
 }, [language]);
 
 // console.log(fetchTranslations('fr'))
