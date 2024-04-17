@@ -24,7 +24,9 @@ function App() {
   };
 
   const handleRemoveElement = (id) => {
+ 
     const updatedElements = elements.filter((element) => element.id !== id);
+    console.log(updatedElements)
     setElements(updatedElements);
   };
 
