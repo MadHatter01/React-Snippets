@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Tree = ({color})=>{
+const Tree = ({color, style})=>{
     return (
         <div className="tree">
         {/* 🌳 */}
-         <svg width="100" height="100" viewBox="0 0 100 100">
+         <svg width="100" height="100" viewBox="0 0 100 100" style={style}>
     <circle cx="50" cy="20" r="15" fill={color} />
     <circle cx="40" cy="35" r="12" fill={color} />
     <circle cx="60" cy="35" r="12" fill={color} />

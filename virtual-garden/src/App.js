@@ -10,7 +10,10 @@ function App() {
 
   const handleAddElement = (type) => {
     const color = getRandomColor();
-    const newElement = { type, color, id: Date.now() };
+    const x = Math.floor(Math.random() * window.innerWidth);
+    const y = Math.floor(Math.random() * window.innerHeight);
+    const newElement = { type, color, id: Date.now(), x, y };
+    // const newElement = { type, color, id: Date.now() };
     setElements([...elements, newElement]);
   };
 

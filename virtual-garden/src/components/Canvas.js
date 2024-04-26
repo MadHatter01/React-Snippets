@@ -17,13 +17,18 @@ const Canvas = ({ elements, onRemoveElement }) => {
         </div>
       ))} */}
        {elements.map((element) => {
+        const style = {
+          position:'absolute',
+          left: `${element.x}px`,
+          top: `${element.y}px`
+        };
         switch (element.type) {
           case 'flower':
-            return <Flower key={element.id} color={element.color} />;
+            return <Flower key={element.id} color={element.color} style={style} />;
           case 'tree':
-            return <Tree key={element.id} color={element.color} />;
+            return <Tree key={element.id} color={element.color}  style={style}/>;
           case 'decoration':
-            return <Decoration key={element.id} color={element.color} />;
+            return <Decoration key={element.id} color={element.color} style={style} />;
           default:
             return null;
         }
