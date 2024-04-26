@@ -48,4 +48,18 @@ h2{
   opacity:0.8;
 }
 
+.primary-btn{
+  border: 3px solid rgb(79, 12, 204);
+  padding: 8px;
+  border-radius: 4px;
+  color: rgb(79, 12, 204);
+  background-color: white;;
+  margin: 4px;
 
+}
+
+.primary-btn:hover{
+  cursor:pointer;
+  background-color: rgb(79, 12, 204);
+  color:white;
+}
