@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {  useState } from 'react';
 import './App.css';
 import Canvas from './components/Canvas';
 import Header from './components/Header';
@@ -29,10 +29,15 @@ function App() {
   const handleRemoveElement = (id) => {
  
     const updatedElements = elements.filter((element) => element.id !== id);
-    console.log(updatedElements)
     setElements(updatedElements);
   };
 
+
+
+  // const getRandomElement = () => {
+  //   const elementTypes = ['Tree', 'Decoration', 'Flower'];
+  //   return elementTypes[Math.floor(Math.random() * elementTypes.length)];
+  // };
 
 
   return (
