@@ -1,6 +1,8 @@
 import React from 'react';
 
-const Toolbar = ({ onAddElement }) => {
+
+const Toolbar = ({ onAddElement, startFocusTimer, stopFocusTimer }) => {
+ 
   return (
     <div className="toolbar">
       <button className="primary-btn" onClick={() => onAddElement('flower')} >Add Flower</button>
@@ -8,8 +10,8 @@ const Toolbar = ({ onAddElement }) => {
       <button className="primary-btn" onClick={() => onAddElement('decoration')}>Add Decoration</button>
       <div className='customTime'>
 <p>Focus Timer:</p>  
-<button className='focus'>Start</button>
-<button className='focus'>Start</button>
+<button type="button" className='focus' onClick={startFocusTimer}>Start</button>
+<button type="button" className='focus' onClick={stopFocusTimer}>stop</button>
       </div>
     </div>
    

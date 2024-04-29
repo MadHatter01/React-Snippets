@@ -1,4 +1,4 @@
-import {  useState } from 'react';
+import {useState } from 'react';
 import './App.css';
 import Canvas from './components/Canvas';
 import Header from './components/Header';
@@ -7,6 +7,40 @@ import Toolbar from './components/Toolbar';
 function App() {
 
   const [elements, setElements] = useState([]);
+  const [timerRunning, setTimerRunning] = useState(false);
+  const [intervalId, setIntervalId] = useState(null);
+
+  const startFocusTimer = ()=>{
+    if(!timerRunning){
+      const id = setInterval(()=>{
+        const randomElement = getRandomElement();
+        setElements(prevElements => {
+          const color = getRandomColor();
+          const x = Math.floor(Math.random() * window.innerWidth);
+          const y = Math.floor(Math.random() * window.innerHeight);
+          const newElement = { type: randomElement, color, id: Date.now(), x, y };
+          return [...prevElements, newElement];
+        });
+      }, 1000);
+      setIntervalId(id);
+      setTimerRunning(true);
+    }
+ 
+  }
+
+  const stopFocusTimer = ()=>{
+    if(timerRunning){
+      clearInterval(intervalId);
+      setIntervalId(null);
+      setTimerRunning(false);
+    }
+  }
+
+  const getRandomElement = () => {
+    const elementTypes = ['flower', 'tree', 'decoration'];
+    return elementTypes[Math.floor(Math.random() * elementTypes.length)];
+  };
+
 
   const handleAddElement = (type) => {
     const color = getRandomColor();
@@ -34,17 +68,11 @@ function App() {
 
 
 
-  // const getRandomElement = () => {
-  //   const elementTypes = ['Tree', 'Decoration', 'Flower'];
-  //   return elementTypes[Math.floor(Math.random() * elementTypes.length)];
-  // };
-
-
   return (
     <div className="App">
       {/* <Header /> */}
 
-      <Toolbar onAddElement={handleAddElement} />
+      <Toolbar onAddElement={handleAddElement} startFocusTimer={startFocusTimer} stopFocusTimer={stopFocusTimer} />
       <Canvas elements={elements} onRemoveElement={handleRemoveElement} />
 
     </div>
