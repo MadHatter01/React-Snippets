@@ -1,23 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
+import TaskList from './components/TaskList';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Focus Work</h1>
+      <div className='input-container'>
+        <input type="text" placeholder='Enter Task' />
+        <button className='add-task-btn'>Add Task</button>
+      </div>
+      <TaskList />
     </div>
   );
 }
