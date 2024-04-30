@@ -9,9 +9,11 @@ function App() {
   const [elements, setElements] = useState([]);
   const [timerRunning, setTimerRunning] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
-
+  const [secondsPassed, setSecondsPassed] = useState(0);
   const startFocusTimer = ()=>{
     if(!timerRunning){
+      const startTime = Date.now();
+
       const id = setInterval(()=>{
         const randomElement = getRandomElement();
         setElements(prevElements => {
@@ -19,6 +21,8 @@ function App() {
           const x = Math.floor(Math.random() * window.innerWidth);
           const y = Math.floor(Math.random() * window.innerHeight);
           const newElement = { type: randomElement, color, id: Date.now(), x, y };
+          const elapsedTime = Math.floor((Date.now() - startTime) / 1000); 
+          setSecondsPassed(elapsedTime);
           return [...prevElements, newElement];
         });
       }, 1000);
@@ -74,7 +78,7 @@ function App() {
 
       <Toolbar onAddElement={handleAddElement} startFocusTimer={startFocusTimer} stopFocusTimer={stopFocusTimer} />
       <Canvas elements={elements} onRemoveElement={handleRemoveElement} />
-
+{secondsPassed} seconds
     </div>
   );
 }
