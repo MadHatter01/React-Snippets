@@ -2,11 +2,13 @@ import logo from './logo.svg';
 import './App.css';
 import TaskList from './components/TaskList';
 import React, {useState} from 'react'
+import PomControler from './components/PomControler';
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [inputValue, setInputValue] = useState("")
-
+  const [pomoActive, setPomActive] = useState(false);
+  const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
   const handleTaskAdd = ()=>{
     if(inputValue.trim()!==''){
       setTasks(prevTasks => [...prevTasks, {id: Date.now(), text:inputValue}]);
@@ -14,6 +16,13 @@ function App() {
     }
   }
   
+  const startPomo = ()=>{
+    setPomActive(true)
+  }
+
+  const stopPomo = ()=>{
+    setPomActive(false)
+  }
   return (
     <div className="App">
       <h1>Focus Work</h1>
@@ -21,7 +30,10 @@ function App() {
         <input type="text" placeholder='Enter Task' value={inputValue} onChange={(e)=> setInputValue(e.target.value)} />
         <button className='add-task-btn' onClick={handleTaskAdd}>Add Task</button>
       </div>
-      <TaskList tasks = {tasks} />
+      <TaskList tasks = {tasks} currentTaskIndex={currentTaskIndex} />
+      {tasks.length > 0 &&(
+        <PomControler pomoActive={pomoActive} startPomo={startPomo} stopPomo={stopPomo} currentTask =  {currentTaskIndex} tasks={tasks}/>
+      )}
     </div>
   );
 }
