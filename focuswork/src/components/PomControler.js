@@ -1,6 +1,7 @@
 import React from 'react';
 
-function PomControler({pomoActive, startPomo, stopPomo, currentIndex, tasks}){
+function PomControler({pomoActive, startPomo, stopPomo, currentTaskIndex, tasks}){
+    console.log(currentTaskIndex)
 return (
     <div className='pom-controls'>
        {pomoActive ? (
@@ -8,7 +9,8 @@ return (
        ):(
 <button className='start-btn' onClick={startPomo}>Start Focus</button>
        )} 
-       <div className='progress'>
+       <div className='progress-bar'>
+       <div className="progress" style={{ width: `${(currentTaskIndex / tasks.length) * 100}%` }} />
 
        </div>
     </div>

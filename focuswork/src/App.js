@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import TaskList from './components/TaskList';
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import PomControler from './components/PomControler';
 
 function App() {
@@ -23,6 +23,16 @@ function App() {
   const stopPomo = ()=>{
     setPomActive(false)
   }
+
+  useEffect(() => {
+    let timer;
+    if (pomoActive && tasks[currentTaskIndex]) {
+      timer = setTimeout(() => {
+        setCurrentTaskIndex(currentTaskIndex + 1);
+      }, 5000); 
+    }
+    return () => clearTimeout(timer);
+  }, [pomoActive, tasks, currentTaskIndex]);
   return (
     <div className="App">
       <h1>Focus Work</h1>
@@ -32,7 +42,7 @@ function App() {
       </div>
       <TaskList tasks = {tasks} currentTaskIndex={currentTaskIndex} />
       {tasks.length > 0 &&(
-        <PomControler pomoActive={pomoActive} startPomo={startPomo} stopPomo={stopPomo} currentTask =  {currentTaskIndex} tasks={tasks}/>
+        <PomControler pomoActive={pomoActive} startPomo={startPomo} stopPomo={stopPomo} currentTaskIndex =  {currentTaskIndex} tasks={tasks}/>
       )}
     </div>
   );
