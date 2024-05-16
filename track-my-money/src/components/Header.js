@@ -2,8 +2,8 @@ import React from 'react'
 
 export const Header = () => {
   return (
-    <div>
-        <h2>Track your Bills</h2>
+    <div className='header'>
+        <h1>Track your Bills</h1>
     </div>
   )
 }
