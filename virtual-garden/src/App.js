@@ -10,7 +10,13 @@ function App() {
   const [timerRunning, setTimerRunning] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
   const [secondsPassed, setSecondsPassed] = useState(0);
+  const element = document.getElementById('start');
+
   const startFocusTimer = ()=>{
+    element.style.backgroundColor='rgb(79, 12, 204)';
+    element.style.color = '#fff'
+    element.innerText='Started'
+    // element.setAttribute('class',element.getAttribute('class')+ ' started')
     if(!timerRunning){
       const startTime = Date.now();
 
@@ -33,6 +39,10 @@ function App() {
   }
 
   const stopFocusTimer = ()=>{
+    element.style.color='rgb(79, 12, 204)';
+    element.style.backgroundColor = '#fff'
+    element.innerText='Start'
+    
     if(timerRunning){
       clearInterval(intervalId);
       setIntervalId(null);

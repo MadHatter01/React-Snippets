@@ -20,7 +20,7 @@ const Canvas = ({ elements, onRemoveElement }) => {
         const style = {
           position:'absolute',
           left: `${element.x}px`,
-          top: `${element.y}px`
+          top: `${element.y+100}px`
         };
         switch (element.type) {
           case 'flower':
