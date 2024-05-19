@@ -1,8 +1,10 @@
-import {useState } from 'react';
+import React, {useState, useRef} from 'react';
 import './App.css';
 import Canvas from './components/Canvas';
 import Header from './components/Header';
 import Toolbar from './components/Toolbar';
+import html2canvas from 'html2canvas';
+
 
 function App() {
 
@@ -10,9 +12,23 @@ function App() {
   const [timerRunning, setTimerRunning] = useState(false);
   const [intervalId, setIntervalId] = useState(null);
   const [secondsPassed, setSecondsPassed] = useState(0);
-  const element = document.getElementById('start');
+  const pageRef = useRef();
+ const takeScreenshot = async ()=>{
+if(pageRef.current){
+  const canvas = await html2canvas(pageRef.current);
+  const imgData = canvas.toDataURL('image/png');
+  const link = document.createElement('a');
+  link.href = imgData;
+  link.download = 'screen.png';
+  document.body.appendChild(link);
+  link.click();
+  // document.body.removeChild(link);
+}
 
+ }
   const startFocusTimer = ()=>{
+    const element = document.getElementById('start');
+
     element.style.backgroundColor='rgb(79, 12, 204)';
     element.style.color = '#fff'
     element.innerText='Started'
@@ -39,6 +55,8 @@ function App() {
   }
 
   const stopFocusTimer = ()=>{
+    const element = document.getElementById('start');
+
     element.style.color='rgb(79, 12, 204)';
     element.style.backgroundColor = '#fff'
     element.innerText='Start'
@@ -83,11 +101,11 @@ function App() {
 
 
   return (
-    <div className="App">
+    <div className="App" ref={pageRef}>
       {/* <Header /> */}
 
-      <Toolbar onAddElement={handleAddElement} startFocusTimer={startFocusTimer} stopFocusTimer={stopFocusTimer} />
-      <Canvas elements={elements} onRemoveElement={handleRemoveElement} />
+      <Toolbar onAddElement={handleAddElement} startFocusTimer={startFocusTimer} stopFocusTimer={stopFocusTimer} takeScreenshot={takeScreenshot}/>
+      <Canvas  elements={elements} onRemoveElement={handleRemoveElement} />
 {secondsPassed} seconds
     </div>
   );
