@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import './App.css';
 import Canvas from './components/Canvas';
 import Header from './components/Header';
@@ -13,9 +13,24 @@ function App() {
   const [intervalId, setIntervalId] = useState(null);
   const [secondsPassed, setSecondsPassed] = useState(0);
   const pageRef = useRef();
+
+  useEffect(() => {
+    if (pageRef.current) {
+      pageRef.current.style.minHeight = '100vh';
+    }
+  }, []);
+
+
  const takeScreenshot = async ()=>{
 if(pageRef.current){
-  const canvas = await html2canvas(pageRef.current);
+  console.log('SVG Elements:', pageRef.current.querySelectorAll('svg'));
+
+  const canvas = await html2canvas(pageRef.current, { useCORS: true,
+    foreignObjectRendering: true,
+    windowWidth: document.documentElement.scrollWidth,
+    windowHeight: document.documentElement.scrollHeight,
+    scrollX: window.scrollX,
+    scrollY: window.scrollY});
   const imgData = canvas.toDataURL('image/png');
   const link = document.createElement('a');
   link.href = imgData;
