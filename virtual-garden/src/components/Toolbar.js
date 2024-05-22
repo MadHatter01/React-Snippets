@@ -9,7 +9,7 @@ const Toolbar = ({ onAddElement, startFocusTimer, stopFocusTimer, takeScreenshot
       <button className="primary-btn" onClick={() => onAddElement('tree')}>Add Tree</button>
       <button className="primary-btn" onClick={() => onAddElement('decoration')}>Add Decoration</button> */}
       <div className='customTime'>
-<p>Focus Timer:</p>  
+<h1>Focus Timer</h1>  
 <button type="button" id="start" className='primary-btn focus' onClick={startFocusTimer}>Start</button>
 <button type="button" className='primary-btn focus' onClick={stopFocusTimer}>stop</button>
 <button type="button" className='screenshot secondary-btn' onClick={takeScreenshot}>Take Screenshot</button>

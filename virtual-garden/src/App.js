@@ -1,7 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import './App.css';
 import Canvas from './components/Canvas';
-import Header from './components/Header';
 import Toolbar from './components/Toolbar';
 import html2canvas from 'html2canvas';
 
@@ -23,7 +22,6 @@ function App() {
 
  const takeScreenshot = async ()=>{
 if(pageRef.current){
-  console.log('SVG Elements:', pageRef.current.querySelectorAll('svg'));
 
   const canvas = await html2canvas(pageRef.current, { useCORS: true,
     foreignObjectRendering: true,
@@ -58,11 +56,12 @@ if(pageRef.current){
           const x = Math.floor(Math.random() * window.innerWidth);
           const y = Math.floor(Math.random() * window.innerHeight);
           const newElement = { type: randomElement, color, id: Date.now(), x, y };
-          const elapsedTime = Math.floor((Date.now() - startTime) / 1000); 
+          // const elapsedTime = Math.floor((Date.now() - startTime) / 1000); 
+          const elapsedTime = Math.floor((Date.now() - startTime))
           setSecondsPassed(elapsedTime);
           return [...prevElements, newElement];
         });
-      }, 1000);
+      }, 60000);
       setIntervalId(id);
       setTimerRunning(true);
     }
@@ -117,7 +116,6 @@ if(pageRef.current){
 
   return (
     <div className="App" ref={pageRef}>
-      {/* <Header /> */}
 
       <Toolbar onAddElement={handleAddElement} startFocusTimer={startFocusTimer} stopFocusTimer={stopFocusTimer} takeScreenshot={takeScreenshot}/>
       <Canvas  elements={elements} onRemoveElement={handleRemoveElement} />
