@@ -61,7 +61,7 @@ if(pageRef.current){
           setSecondsPassed(elapsedTime);
           return [...prevElements, newElement];
         });
-      }, 1000);
+      }, 60000);
       setIntervalId(id);
       setTimerRunning(true);
     }
