@@ -26,9 +26,9 @@ if(pageRef.current){
   const canvas = await html2canvas(pageRef.current, { useCORS: true,
     foreignObjectRendering: true,
     windowWidth: document.documentElement.scrollWidth,
-    windowHeight: document.documentElement.scrollHeight,
+    windowHeight: document.documentElement.scrollHeight ,
     scrollX: window.scrollX,
-    scrollY: window.scrollY});
+    scrollY: window.scrollY+100});
   const imgData = canvas.toDataURL('image/png');
   const link = document.createElement('a');
   link.href = imgData;
@@ -61,7 +61,7 @@ if(pageRef.current){
           setSecondsPassed(elapsedTime);
           return [...prevElements, newElement];
         });
-      }, 60000);
+      }, 1000);
       setIntervalId(id);
       setTimerRunning(true);
     }
